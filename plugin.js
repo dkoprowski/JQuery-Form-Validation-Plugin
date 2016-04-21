@@ -16,11 +16,10 @@
     $.fn.checkRegex = function (regex) {
         if (validateRegex(this.val(), regex)) {
             inputFieldPassed(this);
-            return true;
         } else {
             inputFieldRejected(this);
-            return false;
         }
+        return this;        
     };
 
     function validateRegex(text, regex) {
@@ -32,11 +31,10 @@
     $.fn.checkEmail = function () {
         if (validateEmail(this.val())) {
             inputFieldPassed(this);
-            return true;
         } else {
             inputFieldRejected(this);
-            return false;
         }
+        return this;
     };
 
     function validateEmail(text) {
@@ -57,10 +55,10 @@ $(function () {
     });
 
     function validateAll() {
-        var isField1Ok = regexInput.checkRegex(/[A-Z].+/);
-        var isField2Ok = emailInput.checkEmail();
+        regexInput.checkRegex(/[A-Z].+/);
+        emailInput.checkEmail();
 
-        if (isField1Ok && isField2Ok) {
+        if (emailInput.hasClass("good") && regexInput.hasClass("good")) {
             submitBtn.removeAttr('disabled');
         }
         else {
