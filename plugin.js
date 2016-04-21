@@ -5,9 +5,11 @@
         if(validateRegex(this.val(), regex)){
             this.addClass("good");
             this.removeClass("bad");
+            $('#submit').removeAttr('disabled');
         }else{
             this.addClass("bad");
-            this.removeClass("good");                        
+            this.removeClass("good");
+            $('#submit').attr('disabled', 'disabled');                        
         }
         return this;
     };
