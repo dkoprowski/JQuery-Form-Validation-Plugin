@@ -133,7 +133,7 @@ $(function () {
         emailInput.checkEmail();
         passwordInput.checkPassword().passwordPower(passhint);
 
-        if (emailInput.hasClass("good") && regexInput.hasClass("good")) {
+        if (emailInput.hasClass("good") && regexInput.hasClass("good") && passwordInput.hasClass("good")) {
             submitBtn.removeAttr('disabled');
         }
         else {
