@@ -24,7 +24,7 @@
 
     function validateRegex(text, regex) {
         return regex.test(text);
-    };
+    }
 
     // ----------------------------------
     // email
@@ -40,7 +40,7 @@
     function validateEmail(text) {
         var emailRegex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         return emailRegex.test(text);
-    };
+    }
 
     //--------------------------------
     //password
@@ -59,9 +59,9 @@
         } else {
             return false;
         }
-    };
+    }
 
-    $.fn.passwordPower = function (passhint) {
+    $.fn.passwordPower = function () {
         if (this.val().length < 6) {
             $('#hint0').show();
         } else {
@@ -118,7 +118,7 @@ $(function () {
     var passhint = $('#passhint');
     var submitBtn = $('#submit');
 
-    $("input").each(function (index) {
+    $("input").each(function () {
         $(this).change(function () {
             validateAll();
         });
