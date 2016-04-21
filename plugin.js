@@ -1,44 +1,71 @@
 /* jshint browser: true, jquery: true, devel: true, unused: true */
-(function ( $ ) {
+(function ($) {
+
+
+
+    function inputFieldPassed(field) {
+        field.addClass("good");
+        field.removeClass("bad");
+    }
+
+    function inputFieldRejected(field) {
+        field.addClass("bad");
+        field.removeClass("good");
+    }
     // regex
-    $.fn.checkRegex = function(regex) {
-        if(validateRegex(this.val(), regex)){
-            this.addClass("good");
-            this.removeClass("bad");
-            $('#submit').removeAttr('disabled');
-        }else{
-            this.addClass("bad");
-            this.removeClass("good");
-            $('#submit').attr('disabled', 'disabled');                        
+    $.fn.checkRegex = function (regex) {
+        if (validateRegex(this.val(), regex)) {
+            inputFieldPassed(this);
+            return true;
+        } else {
+            inputFieldRejected(this);
+            return false;
         }
-        return this;
     };
-    
-    function validateRegex(text, regex){
-        console.log(regex.test(text));
+
+    function validateRegex(text, regex) {
         return regex.test(text);
     };
- 
- // ----------------------------------
- // email
-     $.fn.checkEmail = function() {
-        if(validateEmail(this.val())){
-            this.addClass("good");
-        }else{
-            this.addClass("bad");            
+
+    // ----------------------------------
+    // email
+    $.fn.checkEmail = function () {
+        if (validateEmail(this.val())) {
+            inputFieldPassed(this);
+            return true;
+        } else {
+            inputFieldRejected(this);
+            return false;
         }
-        return this;
     };
-    
-    function validateEmail(text){
-        return true;
+
+    function validateEmail(text) {
+        var emailRegex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+        return emailRegex.test(text);
     };
-}( jQuery ));
+} (jQuery));
 
 $(function () {
     var regexInput = $('#regexInput');
-    regexInput.click(function(){
-       regexInput.checkRegex(/[A-Z].+/);     
+    var emailInput = $('#emailInput');
+    var submitBtn = $('#submit');
+
+    $("input").each(function (index) {
+        $(this).change(function () {
+            validateAll();
+        });
     });
+
+    function validateAll() {
+        var isField1Ok = regexInput.checkRegex(/[A-Z].+/);
+        var isField2Ok = emailInput.checkEmail();
+
+        if (isField1Ok && isField2Ok) {
+            submitBtn.removeAttr('disabled');
+        }
+        else {
+            submitBtn.attr('disabled', 'disabled');
+        }
+    }
 
 });
