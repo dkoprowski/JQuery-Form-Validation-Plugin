@@ -5,3 +5,7 @@
 .bad{
     background-color: red;
 }
+
+#passhint{
+    font-size: .6em;
+}

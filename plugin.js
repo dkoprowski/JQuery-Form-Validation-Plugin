@@ -61,6 +61,39 @@
         }
     };
 
+    $.fn.passwordPower = function (passhint) {
+        if (this.val().length < 6) {
+            $('#hint0').show();
+        } else {
+            $('#hint0').hide();
+        }
+
+        if (!hasLowerCase(this.val())) {
+            $('#hint1').show();
+        } else {
+            $('#hint1').hide();
+        }
+
+        if (!hasUpperCase(this.val())) {
+            $('#hint2').show();
+        } else {
+            $('#hint2').hide();
+        }
+
+        if (!hasDigitsCase(this.val())) {
+            $('#hint3').show();
+        } else {
+            $('#hint3').hide();
+        }
+
+        if (!hasSpecialCharacter(this.val())) {
+            $('#hint4').show();
+        } else {
+            $('#hint4').hide();
+        }
+        return this;
+    };
+
     function hasLowerCase(str) {
         return (/[a-z]/.test(str));
     }
@@ -68,12 +101,21 @@
     function hasUpperCase(str) {
         return (/[A-Z]/.test(str));
     }
+
+    function hasDigitsCase(str) {
+        return (/[0-9]/.test(str));
+    }
+
+    function hasSpecialCharacter(str) {
+        return (/[^a-zA-Z\d\s:]/.test(str));
+    }
 } (jQuery));
 
 $(function () {
     var regexInput = $('#regexInput');
     var emailInput = $('#emailInput');
     var passwordInput = $('#password');
+    var passhint = $('#passhint');
     var submitBtn = $('#submit');
 
     $("input").each(function (index) {
@@ -82,10 +124,14 @@ $(function () {
         });
     });
 
+    passwordInput.keyup(function () {
+        passwordInput.checkPassword().passwordPower(passhint);
+    });
+
     function validateAll() {
         regexInput.checkRegex(/[A-Z].+/);
         emailInput.checkEmail();
-        passwordInput.checkPassword();
+        passwordInput.checkPassword().passwordPower(passhint);
 
         if (emailInput.hasClass("good") && regexInput.hasClass("good")) {
             submitBtn.removeAttr('disabled');
